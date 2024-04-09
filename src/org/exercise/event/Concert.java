@@ -42,6 +42,6 @@ public class Concert extends Event{
 
     @Override
     public String toString() {
-        return  getDateFormat() + " " + getTimeFormat() + " - " + getTitle() + " - " + getPriceFormat() + "\n";
+        return  getDateFormat() + " " + getTimeFormat() + " - " + getTitle() + " - " + getPriceFormat() + "€" + "\n";
     }
 }
