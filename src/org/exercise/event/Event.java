@@ -92,4 +92,6 @@ public class Event {
     public int hashCode() {
         return Objects.hashCode(getTitle());
     }
+
+
 }
