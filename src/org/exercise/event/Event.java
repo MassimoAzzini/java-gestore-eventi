@@ -1,6 +1,7 @@
 package org.exercise.event;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
@@ -48,6 +49,10 @@ public class Event {
         return date;
     }
 
+    public String getDateFormat() {
+        return date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    }
+
     public void setDate(LocalDate date) throws IllegalArgumentException {
         if (date.isBefore(LocalDate.now()) || date == null){
             throw new IllegalArgumentException("The date is obligatory and must not have already passed");
@@ -77,7 +82,7 @@ public class Event {
 
     @Override
     public String toString() {
-        return  date.format(DateTimeFormatter.ISO_LOCAL_DATE) + " - " + title + "\n";
+        return  getDateFormat() + " - " + title + "\n";
     }
 
     @Override
