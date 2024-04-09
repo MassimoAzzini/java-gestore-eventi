@@ -2,6 +2,7 @@ package org.exercise.event;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 public class Event {
     private String title;
@@ -26,6 +27,10 @@ public class Event {
         }
 
         reservedSeats = 0;
+    }
+
+    public Event(String title) {
+        this.title = title;
     }
 
     public String getTitle() {
@@ -58,8 +63,12 @@ public class Event {
         return reservedSeats;
     }
 
-    public int bookSeats(int seat){
-        return reservedSeats += seat;
+    public int bookSeats(int seat) throws IllegalArgumentException{
+        if((reservedSeats + seat)<getEventCapacity()){
+            return reservedSeats += seat;
+        } else {
+            throw new IllegalArgumentException("non ci sono abbastanza posti disponibili");
+        }
     }
 
     public int cancelReservation(int seat){
@@ -69,5 +78,18 @@ public class Event {
     @Override
     public String toString() {
         return  date.format(DateTimeFormatter.ISO_LOCAL_DATE) + " - " + title + "\n";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Event event = (Event) o;
+        return Objects.equals(getTitle(), event.getTitle());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getTitle());
     }
 }

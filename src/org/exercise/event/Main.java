@@ -103,20 +103,112 @@ public class Main {
                     } catch (IllegalArgumentException e) {
                         System.out.println(e.getMessage());
                     }
+                    break;
 
                 case "N":
                     end = true;
+                    break;
 
                 default:
                     break;
             }
-
         }
 
-        System.out.println(eventsList.toString());
+        boolean endPrenotation = false;
+        while (!endPrenotation){
 
+            System.out.println("***OPZIONI***");
+            System.out.println("1-partecipa ad un evento");
+            System.out.println("2-disdici prenotazione");
+            System.out.println("3-esci");
+            System.out.println("***********************");
+            System.out.println("Cosa vuoi fare?(1-2-3: ");
+            int scelta = Integer.parseInt(scan.nextLine());
 
+            Event eventToFind = null;
+            switch (scelta){
 
+                case 1:
+                    for (Event elem: eventsList){
+                        elem.toString();
+                    }
+
+                    System.out.println("A quale evento vuoi partecipare? ");
+                    eventToFind = new Event(scan.nextLine());
+
+                    if (eventsList.contains(eventToFind)){
+                        for (Event e: eventsList){
+                            if(e.equals(eventToFind)) {
+                                boolean done = false;
+                                while (!done) {
+                                    System.out.println("Posti disponibili: " + (e.getEventCapacity()-e.getReservedSeats()));
+                                    System.out.println("Quanti posti vuoi prenotare?");
+                                    int numberPrenotation = Integer.parseInt(scan.nextLine());
+                                    try {
+                                        e.bookSeats(numberPrenotation);
+                                        done = true;
+
+                                    } catch (IllegalArgumentException ex) {
+                                        System.out.println(ex.getMessage());
+                                    }
+                                }
+
+                            }
+                        }
+
+                    } else {
+                        System.out.println("Non esiste questo evento");
+                    }
+                    break;
+
+                case 2:
+                    System.out.println("Lista eventi prenotati:");
+                    try {
+                        for (Event elem: eventsList){
+                            if(elem.getReservedSeats() > 0){
+                                System.out.println(elem.toString() + " ...... posti prenotati: " + elem.getReservedSeats());
+                            }
+                        }
+                    } catch (Exception ignore) {
+
+                    }
+
+                    System.out.println();
+
+                    System.out.println("Da quale evento vuoi rimuovere la prenotazione? ");
+                    eventToFind = new Event(scan.nextLine());
+
+                    if (eventsList.contains(eventToFind)){
+                        for (Event e: eventsList){
+                            if(e.equals(eventToFind)) {
+                                boolean done = false;
+                                while (!done) {
+                                    System.out.println("Posti prenotati: " + e.getReservedSeats());
+                                    System.out.println("Quanti posti vuoi disdire?");
+                                    int numberDisdetta = Integer.parseInt(scan.nextLine());
+                                    try {
+                                        e.cancelReservation(numberDisdetta);
+                                        done = true;
+
+                                    } catch (IllegalArgumentException ex) {
+                                        System.out.println(ex.getMessage());
+                                    }
+                                }
+
+                            }
+                        }
+
+                    } else {
+                        System.out.println("Non esiste questo evento");
+                    }
+
+                    break;
+
+                default:
+                    endPrenotation = true;
+                    break;
+            }
+        }
 
 
 
