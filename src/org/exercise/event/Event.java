@@ -13,15 +13,17 @@ public class Event {
         if (title == null || title.isEmpty()){
             throw new IllegalArgumentException("Title null or empty");
         }
-        if (date.isBefore(LocalDate.now()) || date == null){
-            throw new IllegalArgumentException("The date is obligatory and must not have already passed");
-        }
-        if (eventCapacity == 0){
+        if (eventCapacity <= 0){
             throw new IllegalArgumentException("You must enter a number greater than 0");
         }
+
         this.title = title;
-        this.date = date;
         this.eventCapacity = eventCapacity;
+        this.date = date;
+
+        if (date.isBefore(LocalDate.now())){
+            throw new IllegalArgumentException("The date is obligatory and must not have already passed");
+        }
 
         reservedSeats = 0;
     }
